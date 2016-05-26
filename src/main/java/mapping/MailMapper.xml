@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.MailMapper" >
+  <resultMap id="BaseResultMap" type="model.Mail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
+    <result column="order_recive" property="orderRecive" jdbcType="INTEGER" />
+    <result column="service" property="service" jdbcType="INTEGER" />
+    <result column="pay" property="pay" jdbcType="INTEGER" />
+    <result column="reward" property="reward" jdbcType="DECIMAL" />
+    <result column="pick_up_address" property="pickUpAddress" jdbcType="VARCHAR" />
+    <result column="pick_up_time" property="pickUpTime" jdbcType="TIMESTAMP" />
+    <result column="pick_up_linkman" property="pickUpLinkman" jdbcType="VARCHAR" />
+    <result column="pick_up_phone" property="pickUpPhone" jdbcType="VARCHAR" />
+    <result column="aim_address" property="aimAddress" jdbcType="VARCHAR" />
+    <result column="aim_time" property="aimTime" jdbcType="TIMESTAMP" />
+    <result column="aim_linkman" property="aimLinkman" jdbcType="VARCHAR" />
+    <result column="aim_phone" property="aimPhone" jdbcType="VARCHAR" />
+    <result column="goods_type_id" property="goodsTypeId" jdbcType="INTEGER" />
+    <result column="goods_size" property="goodsSize" jdbcType="VARCHAR" />
+    <result column="goods_photo" property="goodsPhoto" jdbcType="VARCHAR" />
+    <result column="goods_weight" property="goodsWeight" jdbcType="VARCHAR" />
+    <result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, publish_time, order_recive, service, pay, reward, pick_up_address, pick_up_time, 
+    pick_up_linkman, pick_up_phone, aim_address, aim_time, aim_linkman, aim_phone, goods_type_id, 
+    goods_size, goods_photo, goods_weight, goods_num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="model.MailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="model.MailExample" >
+    delete from mail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="model.Mail" useGeneratedKeys="true" keyProperty="id">
+    insert into mail (id, user_id, publish_time, 
+      order_recive, service, pay, 
+      reward, pick_up_address, pick_up_time, 
+      pick_up_linkman, pick_up_phone, aim_address, 
+      aim_time, aim_linkman, aim_phone, 
+      goods_type_id, goods_size, goods_photo, 
+      goods_weight, goods_num)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{publishTime,jdbcType=TIMESTAMP}, 
+      #{orderRecive,jdbcType=INTEGER}, #{service,jdbcType=INTEGER}, #{pay,jdbcType=INTEGER}, 
+      #{reward,jdbcType=DECIMAL}, #{pickUpAddress,jdbcType=VARCHAR}, #{pickUpTime,jdbcType=TIMESTAMP}, 
+      #{pickUpLinkman,jdbcType=VARCHAR}, #{pickUpPhone,jdbcType=VARCHAR}, #{aimAddress,jdbcType=VARCHAR}, 
+      #{aimTime,jdbcType=TIMESTAMP}, #{aimLinkman,jdbcType=VARCHAR}, #{aimPhone,jdbcType=VARCHAR}, 
+      #{goodsTypeId,jdbcType=INTEGER}, #{goodsSize,jdbcType=VARCHAR}, #{goodsPhoto,jdbcType=VARCHAR}, 
+      #{goodsWeight,jdbcType=VARCHAR}, #{goodsNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="model.Mail" useGeneratedKeys="true" keyProperty="id">
+    insert into mail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="publishTime != null" >
+        publish_time,
+      </if>
+      <if test="orderRecive != null" >
+        order_recive,
+      </if>
+      <if test="service != null" >
+        service,
+      </if>
+      <if test="pay != null" >
+        pay,
+      </if>
+      <if test="reward != null" >
+        reward,
+      </if>
+      <if test="pickUpAddress != null" >
+        pick_up_address,
+      </if>
+      <if test="pickUpTime != null" >
+        pick_up_time,
+      </if>
+      <if test="pickUpLinkman != null" >
+        pick_up_linkman,
+      </if>
+      <if test="pickUpPhone != null" >
+        pick_up_phone,
+      </if>
+      <if test="aimAddress != null" >
+        aim_address,
+      </if>
+      <if test="aimTime != null" >
+        aim_time,
+      </if>
+      <if test="aimLinkman != null" >
+        aim_linkman,
+      </if>
+      <if test="aimPhone != null" >
+        aim_phone,
+      </if>
+      <if test="goodsTypeId != null" >
+        goods_type_id,
+      </if>
+      <if test="goodsSize != null" >
+        goods_size,
+      </if>
+      <if test="goodsPhoto != null" >
+        goods_photo,
+      </if>
+      <if test="goodsWeight != null" >
+        goods_weight,
+      </if>
+      <if test="goodsNum != null" >
+        goods_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="publishTime != null" >
+        #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderRecive != null" >
+        #{orderRecive,jdbcType=INTEGER},
+      </if>
+      <if test="service != null" >
+        #{service,jdbcType=INTEGER},
+      </if>
+      <if test="pay != null" >
+        #{pay,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null" >
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="pickUpAddress != null" >
+        #{pickUpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="pickUpTime != null" >
+        #{pickUpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pickUpLinkman != null" >
+        #{pickUpLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="pickUpPhone != null" >
+        #{pickUpPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="aimAddress != null" >
+        #{aimAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="aimTime != null" >
+        #{aimTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aimLinkman != null" >
+        #{aimLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="aimPhone != null" >
+        #{aimPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTypeId != null" >
+        #{goodsTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsSize != null" >
+        #{goodsSize,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPhoto != null" >
+        #{goodsPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsWeight != null" >
+        #{goodsWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null" >
+        #{goodsNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="model.MailExample" resultType="java.lang.Integer" >
+    select count(*) from mail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.publishTime != null" >
+        publish_time = #{record.publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderRecive != null" >
+        order_recive = #{record.orderRecive,jdbcType=INTEGER},
+      </if>
+      <if test="record.service != null" >
+        service = #{record.service,jdbcType=INTEGER},
+      </if>
+      <if test="record.pay != null" >
+        pay = #{record.pay,jdbcType=INTEGER},
+      </if>
+      <if test="record.reward != null" >
+        reward = #{record.reward,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pickUpAddress != null" >
+        pick_up_address = #{record.pickUpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pickUpTime != null" >
+        pick_up_time = #{record.pickUpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pickUpLinkman != null" >
+        pick_up_linkman = #{record.pickUpLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pickUpPhone != null" >
+        pick_up_phone = #{record.pickUpPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aimAddress != null" >
+        aim_address = #{record.aimAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aimTime != null" >
+        aim_time = #{record.aimTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.aimLinkman != null" >
+        aim_linkman = #{record.aimLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aimPhone != null" >
+        aim_phone = #{record.aimPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsTypeId != null" >
+        goods_type_id = #{record.goodsTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsSize != null" >
+        goods_size = #{record.goodsSize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsPhoto != null" >
+        goods_photo = #{record.goodsPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsWeight != null" >
+        goods_weight = #{record.goodsWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsNum != null" >
+        goods_num = #{record.goodsNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mail
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      publish_time = #{record.publishTime,jdbcType=TIMESTAMP},
+      order_recive = #{record.orderRecive,jdbcType=INTEGER},
+      service = #{record.service,jdbcType=INTEGER},
+      pay = #{record.pay,jdbcType=INTEGER},
+      reward = #{record.reward,jdbcType=DECIMAL},
+      pick_up_address = #{record.pickUpAddress,jdbcType=VARCHAR},
+      pick_up_time = #{record.pickUpTime,jdbcType=TIMESTAMP},
+      pick_up_linkman = #{record.pickUpLinkman,jdbcType=VARCHAR},
+      pick_up_phone = #{record.pickUpPhone,jdbcType=VARCHAR},
+      aim_address = #{record.aimAddress,jdbcType=VARCHAR},
+      aim_time = #{record.aimTime,jdbcType=TIMESTAMP},
+      aim_linkman = #{record.aimLinkman,jdbcType=VARCHAR},
+      aim_phone = #{record.aimPhone,jdbcType=VARCHAR},
+      goods_type_id = #{record.goodsTypeId,jdbcType=INTEGER},
+      goods_size = #{record.goodsSize,jdbcType=VARCHAR},
+      goods_photo = #{record.goodsPhoto,jdbcType=VARCHAR},
+      goods_weight = #{record.goodsWeight,jdbcType=VARCHAR},
+      goods_num = #{record.goodsNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="model.Mail" >
+    update mail
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="publishTime != null" >
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderRecive != null" >
+        order_recive = #{orderRecive,jdbcType=INTEGER},
+      </if>
+      <if test="service != null" >
+        service = #{service,jdbcType=INTEGER},
+      </if>
+      <if test="pay != null" >
+        pay = #{pay,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null" >
+        reward = #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="pickUpAddress != null" >
+        pick_up_address = #{pickUpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="pickUpTime != null" >
+        pick_up_time = #{pickUpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pickUpLinkman != null" >
+        pick_up_linkman = #{pickUpLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="pickUpPhone != null" >
+        pick_up_phone = #{pickUpPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="aimAddress != null" >
+        aim_address = #{aimAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="aimTime != null" >
+        aim_time = #{aimTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aimLinkman != null" >
+        aim_linkman = #{aimLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="aimPhone != null" >
+        aim_phone = #{aimPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTypeId != null" >
+        goods_type_id = #{goodsTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsSize != null" >
+        goods_size = #{goodsSize,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPhoto != null" >
+        goods_photo = #{goodsPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsWeight != null" >
+        goods_weight = #{goodsWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null" >
+        goods_num = #{goodsNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.Mail" >
+    update mail
+    set user_id = #{userId,jdbcType=INTEGER},
+      publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      order_recive = #{orderRecive,jdbcType=INTEGER},
+      service = #{service,jdbcType=INTEGER},
+      pay = #{pay,jdbcType=INTEGER},
+      reward = #{reward,jdbcType=DECIMAL},
+      pick_up_address = #{pickUpAddress,jdbcType=VARCHAR},
+      pick_up_time = #{pickUpTime,jdbcType=TIMESTAMP},
+      pick_up_linkman = #{pickUpLinkman,jdbcType=VARCHAR},
+      pick_up_phone = #{pickUpPhone,jdbcType=VARCHAR},
+      aim_address = #{aimAddress,jdbcType=VARCHAR},
+      aim_time = #{aimTime,jdbcType=TIMESTAMP},
+      aim_linkman = #{aimLinkman,jdbcType=VARCHAR},
+      aim_phone = #{aimPhone,jdbcType=VARCHAR},
+      goods_type_id = #{goodsTypeId,jdbcType=INTEGER},
+      goods_size = #{goodsSize,jdbcType=VARCHAR},
+      goods_photo = #{goodsPhoto,jdbcType=VARCHAR},
+      goods_weight = #{goodsWeight,jdbcType=VARCHAR},
+      goods_num = #{goodsNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectNotTakedMailByTime" resultMap="BaseResultMap"   parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from mail
+    WHERE order_recive = 0
+    order by publish_time
+    limit #{beginPos,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
+</mapper>
