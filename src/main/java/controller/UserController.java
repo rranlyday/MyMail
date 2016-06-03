@@ -85,4 +85,25 @@ public class UserController {
             return mav;
         }
     }
+
+    @RequestMapping(value="/loginOut",method = RequestMethod.POST)
+    public ModelAndView loginOut(HttpServletRequest request){
+        ModelAndView mav = new ModelAndView();
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        Map map = new HashMap();
+        try {
+            HttpSession session = request.getSession();
+            session.invalidate();
+            map.put("result", Boolean.TRUE);
+        } catch (Exception e) {
+            map.put("result", Boolean.FALSE);
+            map.put("message", "执行出现出错！");
+            e.printStackTrace();
+        } finally {
+            view.setAttributesMap(map);
+            mav.setView(view);
+            return mav;
+        }
+    }
+
 }

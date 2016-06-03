@@ -1,6 +1,7 @@
 package controller;
 
 import model.Mail;
+import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 import service.MailService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,14 +31,20 @@ public class MailController {
     //·¢²¼ÓÊµ¥
     @RequestMapping(value="/publishMail",method = RequestMethod.POST)
     public ModelAndView publishMail(String aimLinkman, String aimPhone, String aimAddress,Integer goodsTypeId,
-                                    String goodsSize, String goodsWeight, Integer goodsNum,Date aimTime) {
+                                    String goodsSize, String goodsWeight, Integer goodsNum,Date aimTime, Date pickUpTime,
+                                    String pickUpLinkman,
+                                    String pickUpPhone,
+                                    HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
         MappingJacksonJsonView view = new MappingJacksonJsonView();
         Map map = new HashMap();
 
         try {
-           int mailId =  mailService.publishMail(aimLinkman,aimPhone,aimAddress,
-                   goodsTypeId,goodsSize,goodsWeight,goodsNum,aimTime);
+            User user =  (User)request.getSession().getAttribute("user");
+            int userId = user.getId();
+           int mailId =  mailService.publishMail(userId,aimLinkman,aimPhone,aimAddress,
+                   goodsTypeId,goodsSize,goodsWeight,goodsNum,aimTime,pickUpTime,
+                   pickUpLinkman,pickUpPhone);
 
             if (mailId > 0 ){
                 map.put("result", Boolean.TRUE);

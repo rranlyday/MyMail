@@ -18,6 +18,15 @@ public class StringUtil {
         return  path;
     }
 
+    public static String getServerPath(){
+        try {
+            Thread.currentThread().getContextClassLoader().getResource("").toURI().getPath();
+        }catch (Exception e){
+
+        }
+        return null;
+    }
+
     public static  String  manyPicAdressToOne(List<String> pathList,String separator){
         if (pathList.isEmpty())
             return  null;

@@ -10,9 +10,10 @@ import java.util.List;
  */
 public interface MailService{
 
-     int  publishMail(String aimLinkman,String aimPhone,String aimAddress,
+     int  publishMail(Integer userId,String aimLinkman,String aimPhone,String aimAddress,
                       Integer goodsTypeId,String goodsSize, String goodsWeight,
-                      Integer goodsNum,Date aimTime);
+                      Integer goodsNum,Date aimTime, Date pickUpTime,String pickUpLinkman,
+                      String pickUpPhone);
 
     List<Mail> searchNotTakedMailByTime(int curPage, int pageSize);
 

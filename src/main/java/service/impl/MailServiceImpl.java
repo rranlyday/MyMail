@@ -31,8 +31,10 @@ public class MailServiceImpl implements MailService{
     @Autowired
     MailPushJob mailPushJob;
 
-    public int publishMail(String aimLinkman, String aimPhone, String aimAddress,Integer goodsTypeId,
-                           String goodsSize, String goodsWeight, Integer goodsNum,Date aimTime){
+    public int publishMail(Integer userId,String aimLinkman, String aimPhone, String aimAddress,Integer goodsTypeId,
+                           String goodsSize, String goodsWeight, Integer goodsNum,Date aimTime,
+                           Date pickUpTime,String pickUpLinkman,
+                           String pickUpPhone){
 
         Mail  mail = new Mail();
 
@@ -44,6 +46,10 @@ public class MailServiceImpl implements MailService{
         mail.setGoodsWeight(goodsWeight);
         mail.setGoodsNum(goodsNum);
         mail.setAimTime(aimTime);
+        mail.setPickUpLinkman(pickUpLinkman);
+        mail.setPickUpPhone(pickUpPhone);
+        mail.setPickUpTime(pickUpTime);
+        mail.setUserId(userId);
 
         Date publishTime = TimeUtil.getNowSysTime();
         mail.setPublishTime(publishTime);

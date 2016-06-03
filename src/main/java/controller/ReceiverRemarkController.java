@@ -57,11 +57,9 @@ public class ReceiverRemarkController {
                         int rs =  receiverRemarkService.buildReceiverRemark(mailId,grade,remark,photoPath);
                         if (rs > 0){
                             map.put("result", Boolean.TRUE);
-                            map.put("message", "×¢²á³É¹¦£¡");
                         }
                         else {
                             map.put("result", Boolean.FALSE);
-                            map.put("message", "×¢²áÊ§°Ü£¡");
                         }
                         break;
                     } catch (Exception e) {
