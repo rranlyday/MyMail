@@ -452,8 +452,48 @@
     <include refid="Base_Column_List" />
     from mail
     WHERE order_recive = 0
-    order by publish_time
+    order by publish_time DESC
     limit #{beginPos,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="searchMyPushMailNotPickUpByUserId" resultMap="BaseResultMap"   parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from mail
+    WHERE order_recive = 0 AND
+    user_id = #{userId,jdbcType=INTEGER}
+    order by publish_time DESC
+    limit #{beginPos,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="searchMyPushMailPickdeByUserId" resultMap="BaseResultMap"   parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from mail
+    WHERE order_recive = 1 AND
+    user_id = #{userId,jdbcType=INTEGER}
+    order by publish_time DESC
+    limit #{beginPos,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="searchAllMyPushMailUserId" resultMap="BaseResultMap"   parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from mail
+    WHERE user_id = #{userId,jdbcType=INTEGER}
+    order by publish_time DESC
+    limit #{beginPos,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="searchhMyPushMailNotPickUpCountByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
+    select count(*) from mail
+    WHERE user_id = #{userId,jdbcType=INTEGER} AND
+    order_recive = 0
+  </select>
+
+  <select id="searchhMyPushMailNotPickUpPageNum" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
+    select count(*) from mail
+    where order_recive = 0
   </select>
 
 </mapper>

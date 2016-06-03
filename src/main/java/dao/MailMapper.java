@@ -28,5 +28,19 @@ public interface MailMapper {
 
     int updateByPrimaryKey(Mail record);
 
-    List<Mail> selectNotTakedMailByTime(@Param("beginPos") int beginPos, @Param("pageSize") int pageSize);
+    List<Mail> selectNotTakedMailByTime(@Param("beginPos") Integer beginPos, @Param("pageSize") Integer pageSize);
+
+    List<Mail> searchMyPushMailNotPickUpByUserId(@Param("userId")Integer userId,@Param("beginPos")Integer beginPos,
+                                         @Param("pageSize")Integer pageSize);
+
+    List<Mail> searchMyPushMailPickdeByUserId(@Param("userId")Integer userId,@Param("beginPos")Integer beginPos,
+                                              @Param("pageSize")Integer pageSize);
+
+    List<Mail> searchAllMyPushMailUserId(@Param("userId")Integer userId,@Param("beginPos")Integer beginPos,
+                                         @Param("pageSize")Integer pageSize);
+
+    int searchhMyPushMailNotPickUpCountByUserId(Integer userId);
+
+    int searchhMyPushMailNotPickUpPageNum();
+
 }

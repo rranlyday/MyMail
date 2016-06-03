@@ -14,5 +14,7 @@ public interface MailPushUserService{
     int buildMailPushUser(MailPushUser mailPushUser);
 
     List<MailPushUser> selectNotArriveMailPushUserByUserId(int userId);
+
+
 }
 

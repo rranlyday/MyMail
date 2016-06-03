@@ -5,11 +5,13 @@ package util;
  */
 public class MathUtil {
 
-
     public  static  int numToPageTotal(int num,int perPageSzie ){
         if (perPageSzie == 0){
             throw new RuntimeException("除数不能为0");
         }
-        return  num/perPageSzie + (num%perPageSzie) == 0 ? 0:1;
+        int count = num/perPageSzie;
+        if (num%perPageSzie !=0)
+            count++;
+        return  count;
     }
 }

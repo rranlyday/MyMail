@@ -18,4 +18,14 @@ public interface MailService{
     List<Mail> searchNotTakedMailByTime(int curPage, int pageSize);
 
     List<Mail> searchMailByCondition(int curPage, int pageSize, String searchCondition);
+
+    List<Mail>  searchMyPushMailNotPickUpByUserId(int userId,int curPage,int pageSize);
+
+    List<Mail> searchMyPushMailPickdeByUserId(int userId,int curPage,int pageSize);
+
+    List<Mail> searchAllMyPushMailUserId(int userId,int curPage,int pageSize);
+
+    int searchhMyPushMailNotPickUpPageNumByUserId(int userId,int pageSize);
+
+    int searchhMyPushMailNotPickUpPageNum(int pageSize);
 }

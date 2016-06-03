@@ -3,6 +3,7 @@ package controller;
 import model.Mail;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,9 +33,7 @@ public class MailController {
     @RequestMapping(value="/publishMail",method = RequestMethod.POST)
     public ModelAndView publishMail(String aimLinkman, String aimPhone, String aimAddress,Integer goodsTypeId,
                                     String goodsSize, String goodsWeight, Integer goodsNum,Date aimTime, Date pickUpTime,
-                                    String pickUpLinkman,
-                                    String pickUpPhone,
-                                    HttpServletRequest request) {
+                                    String pickUpLinkman, String pickUpPhone,HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
         MappingJacksonJsonView view = new MappingJacksonJsonView();
         Map map = new HashMap();
@@ -100,6 +99,118 @@ public class MailController {
             map.put("mailList",mailList);
             map.put("result", Boolean.TRUE);
             map.put("message", "执行出现出错！");
+        } catch (Exception e) {
+            map.put("result", Boolean.FALSE);
+            map.put("message", "执行出现出错！");
+            e.printStackTrace();
+        } finally {
+            view.setAttributesMap(map);
+            mav.setView(view);
+            return mav;
+        }
+    }
+
+    //我发布未接邮单
+    @RequestMapping(value="/searchMyPushNotPickUpMail",method = RequestMethod.POST)
+    public ModelAndView searchMyPushNotPickUpMail(int curPage,int pageSize,HttpServletRequest request){
+        ModelAndView mav = new ModelAndView();
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        Map map = new HashMap();
+        try {
+            User user = (User)request.getSession().getAttribute("user");
+            int userId = user.getId();
+            List<Mail> mailList = mailService.searchMyPushMailNotPickUpByUserId(userId, curPage, pageSize);
+            map.put("mailList",mailList);
+            map.put("result", Boolean.TRUE);
+        } catch (Exception e) {
+            map.put("result", Boolean.FALSE);
+            map.put("message", "执行出现出错！");
+            e.printStackTrace();
+        } finally {
+            view.setAttributesMap(map);
+            mav.setView(view);
+            return mav;
+        }
+    }
+
+    //我发的已接邮单
+    @RequestMapping(value="/searchMyPushPickedMail",method = RequestMethod.POST)
+    public ModelAndView searchMyPushPickedMail(int curPage,int pageSize,HttpServletRequest request){
+        ModelAndView mav = new ModelAndView();
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        Map map = new HashMap();
+        try {
+            User user = (User)request.getSession().getAttribute("user");
+            int userId = user.getId();
+            List<Mail> mailList = mailService.searchMyPushMailPickdeByUserId(userId, curPage, pageSize);
+            map.put("mailList",mailList);
+            map.put("result", Boolean.TRUE);
+        } catch (Exception e) {
+            map.put("result", Boolean.FALSE);
+            map.put("message", "执行出现出错！");
+            e.printStackTrace();
+        } finally {
+            view.setAttributesMap(map);
+            mav.setView(view);
+            return mav;
+        }
+    }
+
+    //我发已接邮单
+    @RequestMapping(value="/searchAllMyPushMail",method = RequestMethod.POST)
+    public ModelAndView searchAllMyPushMail(int curPage,int pageSize,HttpServletRequest request){
+        ModelAndView mav = new ModelAndView();
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        Map map = new HashMap();
+        try {
+            User user = (User)request.getSession().getAttribute("user");
+            int userId = user.getId();
+            List<Mail> mailList = mailService.searchAllMyPushMailUserId(userId, curPage, pageSize);
+            map.put("mailList",mailList);
+            map.put("result", Boolean.TRUE);
+        } catch (Exception e) {
+            map.put("result", Boolean.FALSE);
+            map.put("message", "执行出现出错！");
+            e.printStackTrace();
+        } finally {
+            view.setAttributesMap(map);
+            mav.setView(view);
+            return mav;
+        }
+    }
+
+
+    //我发未接邮单总页数
+    @RequestMapping(value="/searchNotPickUpdeMailPageNumByUserId",method = RequestMethod.POST)
+    public ModelAndView searchNotPickUpdeMailPageNumByUserId(int pageSize,HttpServletRequest request){
+        ModelAndView mav = new ModelAndView();
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        Map map = new HashMap();
+        try {
+            User user = (User)request.getSession().getAttribute("user");
+            int userId = user.getId();
+            Integer pageNum = mailService.searchhMyPushMailNotPickUpPageNumByUserId(userId,pageSize);
+            map.put("pageNum",pageNum);
+        } catch (Exception e) {
+            map.put("result", Boolean.FALSE);
+            map.put("message", "执行出现出错！");
+            e.printStackTrace();
+        } finally {
+            view.setAttributesMap(map);
+            mav.setView(view);
+            return mav;
+        }
+    }
+
+    //未接邮单总页数
+    @RequestMapping(value="/searchNotPickUpdeMailPageNum",method = RequestMethod.POST)
+    public ModelAndView searchNotPickUpdeMailPageNum(int pageSize){
+        ModelAndView mav = new ModelAndView();
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        Map map = new HashMap();
+        try {
+            Integer pageNum = mailService.searchhMyPushMailNotPickUpPageNum(pageSize);
+            map.put("pageNum",pageNum);
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
             map.put("message", "执行出现出错！");

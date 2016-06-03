@@ -77,6 +77,33 @@ public class MailServiceImpl implements MailService{
     }
 
     private  String bulidMailPushMessage(Mail  mail){
-        return  "你有新的邮单，请注意查收哦！";
+        return "你有新的邮单，请注意查收哦！";
+    }
+
+    public List<Mail> searchMyPushMailNotPickUpByUserId(int userId,int curPage,int pageSize) {
+        int beginPos = curPage  * pageSize;
+        return mailMapper.searchMyPushMailNotPickUpByUserId(userId, beginPos, pageSize);
+    }
+
+    public List<Mail> searchMyPushMailPickdeByUserId(int userId, int curPage, int pageSize) {
+        int beginPos = curPage  * pageSize;
+        return mailMapper.searchMyPushMailPickdeByUserId(userId,beginPos,pageSize);
+    }
+
+    public List<Mail> searchAllMyPushMailUserId(int userId, int curPage, int pageSize) {
+        int beginPos = curPage  * pageSize;
+        return mailMapper.searchAllMyPushMailUserId(userId,beginPos,pageSize);
+    }
+
+    public int searchhMyPushMailNotPickUpPageNumByUserId(int userId, int pageSize) {
+        int count = mailMapper.searchhMyPushMailNotPickUpCountByUserId(userId);
+        int pageNum = MathUtil.numToPageTotal(count,pageSize);
+        return pageNum;
+    }
+
+    public int searchhMyPushMailNotPickUpPageNum(int pageSize) {
+        int count = mailMapper.searchhMyPushMailNotPickUpPageNum();
+        int pageNum = MathUtil.numToPageTotal(count,pageSize);
+        return pageNum;
     }
 }

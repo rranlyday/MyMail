@@ -3,6 +3,7 @@ package controller;
 import DTO.MailPushMessageDTO;
 import model.MailPush;
 import model.MailPushUser;
+import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,12 +34,13 @@ public class MailPushMessageController {
 
     //” µ•Õ∆ÀÕ
     @RequestMapping(value="/mailPushMessage",method = RequestMethod.POST)
-    public ModelAndView mailPushMessage(int userId,HttpServletRequest request) {
+    public ModelAndView mailPushMessage(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
         MappingJacksonJsonView view = new MappingJacksonJsonView();
         Map map = new HashMap();
-        System.out.println(" I am coming!!!");
         try {
+            User user = (User)request.getSession().getAttribute("user");
+            Integer userId = user.getId();
             List<MailPushUser> mailPushUserList = mailPushUserService.selectNotArriveMailPushUserByUserId(userId);
             List<MailPushMessageDTO> mailPushMessageDTOList = new ArrayList<MailPushMessageDTO>();
             for (MailPushUser mailPushUser:mailPushUserList){
