@@ -40,10 +40,11 @@ public class UserController {
                 map.put("result", Boolean.TRUE);
                 map.put("message", "success");
                 map.put("user",user);
-                System.out.println("µÇÂ¼³É¹¦£¡£¡");
+                System.out.println("sucess£¡£¡");
             } else {
                 map.put("result", Boolean.FALSE);
                 map.put("message", "ÓÃ»§Ãû»òÃÜÂëÌîÐ´´íÎó£¡");
+                System.out.println("fail£¡£¡");
             }
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
@@ -105,5 +106,6 @@ public class UserController {
             return mav;
         }
     }
+
 
 }

@@ -2,6 +2,7 @@ package service;
 
 import model.Mail;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface MailService{
      int  publishMail(Integer userId,String aimLinkman,String aimPhone,String aimAddress,
                       Integer goodsTypeId,String goodsSize, String goodsWeight,
                       Integer goodsNum,Date aimTime, Date pickUpTime,String pickUpLinkman,
-                      String pickUpPhone);
+                      String pickUpPhone,Long reward,String pickUpAddress);
 
     List<Mail> searchNotTakedMailByTime(int curPage, int pageSize);
 
@@ -28,4 +29,8 @@ public interface MailService{
     int searchhMyPushMailNotPickUpPageNumByUserId(int userId,int pageSize);
 
     int searchhMyPushMailNotPickUpPageNum(int pageSize);
+
+    int updateSelectiveById(Mail mail);
+
+    Mail searchMailById(Integer mailId);
 }

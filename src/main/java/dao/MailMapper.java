@@ -43,4 +43,7 @@ public interface MailMapper {
 
     int searchhMyPushMailNotPickUpPageNum();
 
+    List<Mail> searchMailByCondition(@Param("beginPos")Integer beginPos, @Param("pageSize")Integer pageSize,
+                                     @Param("searchCondition")String searchCondition);
+
 }

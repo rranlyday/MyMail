@@ -6,15 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 import service.MailService;
+import util.StringUtil;
+import util.TimeUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * Created by Administrator on 2016/5/24 0024.
@@ -30,22 +34,26 @@ public class MailController {
     //发布邮单
     @RequestMapping(value="/publishMail",method = RequestMethod.POST)
     public ModelAndView publishMail(String aimLinkman, String aimPhone, String aimAddress,Integer goodsTypeId,
-                                    String goodsSize, String goodsWeight, Integer goodsNum,Date aimTime, Date pickUpTime,
-                                    String pickUpLinkman, String pickUpPhone,HttpServletRequest request) {
+                                    String goodsSize, String goodsWeight, Integer goodsNum,String aimTime, String pickUpTime,
+                                    String pickUpLinkman, String pickUpPhone,String reward,String pickUpAddress, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
         MappingJacksonJsonView view = new MappingJacksonJsonView();
         Map map = new HashMap();
-
         try {
             System.out.println("hello world!");
-            User user =  (User)request.getSession().getAttribute("user");
+            System.out.println("aimTime: "+aimTime);
+            System.out.println("pickUpTime: "+pickUpTime);
+            System.out.println("reward: "+reward);
+            System.out.println("pickUpAddress: "+pickUpAddress);
+           User user =  (User)request.getSession().getAttribute("user");
             int userId = user.getId();
            int mailId =  mailService.publishMail(userId,aimLinkman,aimPhone,aimAddress,
-                   goodsTypeId,goodsSize,goodsWeight,goodsNum,aimTime,pickUpTime,
-                   pickUpLinkman,pickUpPhone);
+                   goodsTypeId,goodsSize,goodsWeight,goodsNum, TimeUtil.strToDate(aimTime),TimeUtil.strToDate(pickUpTime),
+                   pickUpLinkman,pickUpPhone,Long.parseLong(reward),pickUpAddress);
             if (mailId > 0 ){
                 map.put("result", Boolean.TRUE);
-                map.put("message", "发布邮单成功！");
+                map.put("mailId",mailId);
+                map.put("message", "发布邮;单成功！");
             }else{
                 map.put("result", Boolean.FALSE);
                 map.put("message", "发布邮单失败！");
@@ -61,6 +69,51 @@ public class MailController {
         }
     }
 
+    @RequestMapping(value="/uploadMailPhoto",method = RequestMethod.POST)
+    public ModelAndView uploadMailPhoto(@RequestParam("file") CommonsMultipartFile[] files,HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        Map map = new HashMap();
+        System.out.println("comeig on!1111");
+        try {
+            for (int modelAndView = 0; modelAndView < files.length; ++modelAndView) {
+                System.out.println("fileName---------->" + files[modelAndView].getOriginalFilename());
+                String photoPath = null;
+                if (!files[modelAndView].isEmpty()) {
+                    try {
+                        String fileName = StringUtil.refileName() + files[modelAndView].getOriginalFilename();
+                        String filePath = "/mailPic/" + fileName;
+                        photoPath = filePath;
+                        System.out.println(filePath);
+                        String serverPath = request.getSession().getServletContext().getRealPath("/") +"mailPic/" + fileName;
+                        FileOutputStream os = new FileOutputStream(StringUtil.getSysPath() + filePath);
+                        FileOutputStream server = new FileOutputStream(serverPath);
+                        FileInputStream in = (FileInputStream) files[modelAndView].getInputStream();
+                        int b = 0;
+                        while ((b = in.read()) != -1) {
+                            os.write(b);
+                            server.write(b);
+                        }
+                        os.flush();
+                        os.close();
+                        server.flush();
+                        server.close();
+                        in.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        throw  new Exception(e);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            map.put("result",Boolean.FALSE);
+            e.printStackTrace();
+        } finally {
+            view.setAttributesMap(map);
+            mav.setView(view);
+            return mav;
+        }
+    }
 
     //未接邮单
     @RequestMapping(value="/searchNotTakedMail",method = RequestMethod.POST)
@@ -69,6 +122,7 @@ public class MailController {
         MappingJacksonJsonView view = new MappingJacksonJsonView();
         Map map = new HashMap();
         try {
+            System.out.println("search not take mail!!");
             List<Mail> mailList =  mailService.searchNotTakedMailByTime(curPage, pageSize);
 
             map.put("mailList",mailList);
@@ -92,6 +146,7 @@ public class MailController {
         MappingJacksonJsonView view = new MappingJacksonJsonView();
         Map map = new HashMap();
         try {
+            System.out.println("take mail!!");
             List<Mail> mailList =  mailService.searchMailByCondition(curPage, pageSize, searchCondition);
 
             map.put("mailList",mailList);
@@ -209,6 +264,26 @@ public class MailController {
         try {
             Integer pageNum = mailService.searchhMyPushMailNotPickUpPageNum(pageSize);
             map.put("pageNum",pageNum);
+        } catch (Exception e) {
+            map.put("result", Boolean.FALSE);
+            map.put("message", "执行出现出错！");
+            e.printStackTrace();
+        } finally {
+            view.setAttributesMap(map);
+            mav.setView(view);
+            return mav;
+        }
+    }
+    //获取邮单ById
+    @RequestMapping(value="/searchMailById",method = RequestMethod.POST)
+    public ModelAndView searchMailById(Integer mailId){
+        ModelAndView mav = new ModelAndView();
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        Map map = new HashMap();
+        try {
+            Mail mail = mailService.searchMailById(mailId);
+            map.put("result", Boolean.TRUE);
+            map.put("mail", mail);
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
             map.put("message", "执行出现出错！");

@@ -496,4 +496,15 @@
     where order_recive = 0
   </select>
 
+  <select id="searchMailByCondition" resultMap="BaseResultMap"   parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from mail
+    where  order_recive = 0 AND
+    pick_up_address LIKE #{searchCondition,jdbcType=VARCHAR}
+    or aim_address LIKE #{searchCondition,jdbcType=VARCHAR}
+    order by publish_time DESC
+    limit #{beginPos,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
 </mapper>

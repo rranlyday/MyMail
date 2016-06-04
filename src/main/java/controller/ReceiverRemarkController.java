@@ -74,4 +74,25 @@ public class ReceiverRemarkController {
             return mav;
         }
     }
+
+    //发单员评论
+    @RequestMapping(value="/receiverRemarkNoPic",method = RequestMethod.POST)
+    public ModelAndView receiverRemarkNoPic(Integer mailId,Integer grade,String remark) {
+        ModelAndView mav = new ModelAndView();
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        Map map = new HashMap();
+        try {
+           int rs =  receiverRemarkService.buildReceiverRemark(mailId,grade,remark,null);
+            if (rs > 0){
+                map.put("result", Boolean.TRUE);
+            }
+            else {
+                map.put("result", Boolean.FALSE);
+            }
+        } finally {
+            view.setAttributesMap(map);
+            mav.setView(view);
+            return mav;
+        }
+    }
 }
