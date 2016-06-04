@@ -12,4 +12,6 @@ public interface ReceiverRemarkService {
     int buildReceiverRemark(Integer mailId,Integer grade,String remark,String photo);
 
     List<ReceiverRemark>  searchReceiverRemarkOrderByTime(int curPage,int pageSie);
+
+    ReceiverRemark getReceiverRemarkByMailId(Integer mailId);
 }

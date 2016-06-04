@@ -1,6 +1,8 @@
 package dao;
 
 import java.util.List;
+
+import model.OrderRecive;
 import model.ReceiverRemark;
 import model.ReceiverRemarkExample;
 import org.apache.ibatis.annotations.Param;
@@ -29,4 +31,7 @@ public interface ReceiverRemarkMapper {
     int updateByPrimaryKey(ReceiverRemark record);
 
     List<ReceiverRemark> searchReceiverRemarkOrderByTime(@Param("beginPos")int beginPos, @Param("pageSie")int pageSie);
+
+    ReceiverRemark getReceiverRemarkByMailId(Integer mailId);
+
 }

@@ -179,4 +179,12 @@
       mailman_id = #{mailmanId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getOrderReciveByMailmanIdAndMailId" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from receiver_remark
+    where mail_id = #{mailId,jdbcType=INTEGER}
+    AND  mailman_id = #{mailmanId,jdbcType=INTEGER}
+  </select>
 </mapper>

@@ -23,7 +23,7 @@ public class OrderReciveController {
     @Autowired
     OrderReciveService orderReciveService;
 
-    //发送消息
+    //接单
     @RequestMapping(value="/recive",method = RequestMethod.POST)
     public ModelAndView recive(Integer mailId,HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();

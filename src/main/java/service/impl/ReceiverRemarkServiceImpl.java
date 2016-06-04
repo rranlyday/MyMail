@@ -38,4 +38,8 @@ public class ReceiverRemarkServiceImpl implements ReceiverRemarkService {
 
         return receiverRemarkMapper.searchReceiverRemarkOrderByTime(beginPos,pageSie);
     }
+
+    public ReceiverRemark getReceiverRemarkByMailId(Integer mailId) {
+        return receiverRemarkMapper.getReceiverRemarkByMailId(mailId);
+    }
 }

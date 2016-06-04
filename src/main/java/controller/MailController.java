@@ -11,6 +11,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 import service.MailService;
+import service.OrderReciveService;
+import service.ReceiverRemarkService;
+import service.SenderRemarkService;
 import util.StringUtil;
 import util.TimeUtil;
 
@@ -30,6 +33,15 @@ public class MailController {
 
     @Autowired
     MailService mailService;
+
+    @Autowired
+    OrderReciveService orderReciveService;
+
+    @Autowired
+    SenderRemarkService senderRemarkService;
+
+    @Autowired
+    ReceiverRemarkService receiverRemarkService;
 
     //发布邮单
     @RequestMapping(value="/publishMail",method = RequestMethod.POST)
@@ -284,6 +296,79 @@ public class MailController {
             Mail mail = mailService.searchMailById(mailId);
             map.put("result", Boolean.TRUE);
             map.put("mail", mail);
+        } catch (Exception e) {
+            map.put("result", Boolean.FALSE);
+            map.put("message", "执行出现出错！");
+            e.printStackTrace();
+        } finally {
+            view.setAttributesMap(map);
+            mav.setView(view);
+            return mav;
+        }
+    }
+
+    //完成邮单
+    @RequestMapping(value="/completeMailById",method = RequestMethod.POST)
+    public ModelAndView completeMailById(Integer mailId){
+        ModelAndView mav = new ModelAndView();
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        Map map = new HashMap();
+        try {
+           if (mailService.completeMailById(mailId)>0){
+               map.put("result", Boolean.TRUE);
+           }else {
+               map.put("result", Boolean.FALSE);
+           }
+        } catch (Exception e) {
+            map.put("result", Boolean.FALSE);
+            map.put("message", "执行出现出错！");
+            e.printStackTrace();
+        } finally {
+            view.setAttributesMap(map);
+            mav.setView(view);
+            return mav;
+        }
+    }
+
+    //完成邮单
+    @RequestMapping(value="/userMailType",method = RequestMethod.POST)
+    public ModelAndView userMailType(Integer mailId,HttpServletRequest request){
+        ModelAndView mav = new ModelAndView();
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        Map map = new HashMap();
+        try {
+            User user = (User)request.getSession().getAttribute("user");
+            int userId = user.getId();
+            Mail mail = mailService.searchMailById(mailId);
+            Integer userType = 0;
+            if (mail != null){
+                if (mail.getUserId()==userId){
+                    if (orderReciveService.getOrderReciveByMailmanIdAndMailId(mailId,userId) != null){
+                        userType = 3;      //即使发单人也是接单人
+                    }else {
+                        userType = 1;     //发单人
+                    }
+                }else {
+                    if(orderReciveService.getOrderReciveByMailmanIdAndMailId(mailId,userId) != null){
+                        userType = 2;    //接单人
+                    }else {
+                        userType = 0 ;  //既不是发单人也不是接单人
+                    }
+                }
+            }
+           Boolean remarked = false;
+            if (userType == 1 ||userType == 3){
+                if (senderRemarkService.getSenderRemarkByMailId(mailId) !=null){
+                    remarked = true ;
+                }
+            }else if (userType == 2){
+                if (receiverRemarkService.getReceiverRemarkByMailId(mailId)!=null){
+                    remarked = true;
+                }
+            }
+            map.put("result", Boolean.TRUE);
+            map.put("userType", userType);
+            map.put("remarked", remarked);
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
             map.put("message", "执行出现出错！");

@@ -102,4 +102,19 @@ public class SenderRemarkController {
             return mav;
         }
     }
+
+    //ªÒ»°∆¿¬€
+    @RequestMapping(value="/getSenderRemark",method = RequestMethod.POST)
+    public ModelAndView getSenderRemarkByMailId(Integer mailId){
+        ModelAndView mav = new ModelAndView();
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        Map map = new HashMap();
+        try {
+
+        } finally {
+            view.setAttributesMap(map);
+            mav.setView(view);
+            return mav;
+        }
+    }
 }

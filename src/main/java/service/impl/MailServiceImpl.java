@@ -124,4 +124,18 @@ public class MailServiceImpl implements MailService{
     public Mail searchMailById(Integer mailId) {
         return mailMapper.selectByPrimaryKey(mailId);
     }
+
+    public int recivedeMailById(Integer mailId) {
+        Mail mail = new Mail();
+        mail.setId(mailId);
+        mail.setOrderRecive(1);
+        return mailMapper.updateByPrimaryKeySelective(mail);
+        }
+
+    public int completeMailById(Integer mailId) {
+        Mail mail = new Mail();
+        mail.setId(mailId);
+        mail.setService(1);
+        return mailMapper.updateByPrimaryKeySelective(mail);
+    }
 }

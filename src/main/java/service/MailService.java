@@ -33,4 +33,8 @@ public interface MailService{
     int updateSelectiveById(Mail mail);
 
     Mail searchMailById(Integer mailId);
+
+    int recivedeMailById(Integer mailId);
+
+    int completeMailById(Integer mailId);
 }

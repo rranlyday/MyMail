@@ -37,4 +37,9 @@ public class SenderRemarkServiceImpl implements SenderRemarkService {
         int beginPos = curPage*pageSie;
         return  senderRemarkMapper.searchSenderRemarkOrderByTime(beginPos,pageSie);
     }
+
+    public SenderRemark getSenderRemarkByMailId(Integer mailId) {
+        return senderRemarkMapper.getSenderRemarkByMailId(mailId);
+    }
+
 }

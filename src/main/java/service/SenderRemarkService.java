@@ -14,4 +14,6 @@ public interface SenderRemarkService {
 
     List<SenderRemark> searchSenderRemarkOrderByTime(int curPage,int pageSie);
 
+    SenderRemark getSenderRemarkByMailId(Integer mailId);
+
 }

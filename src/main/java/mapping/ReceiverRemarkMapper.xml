@@ -235,4 +235,12 @@
     limit #{beginPos,jdbcType=INTEGER},id = #{pageSie,jdbcType=INTEGER}
   </select>
 
+  <select id="getReceiverRemarkByMailId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from receiver_remark
+    where mail_id = #{mailId,jdbcType=INTEGER}
+  </select>
+
+
 </mapper>

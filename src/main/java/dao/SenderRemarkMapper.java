@@ -29,4 +29,6 @@ public interface SenderRemarkMapper {
     int updateByPrimaryKey(SenderRemark record);
 
     List<SenderRemark> searchSenderRemarkOrderByTime(@Param("beginPos")int beginPos, @Param("pageSie")int pageSie);
+
+    SenderRemark getSenderRemarkByMailId(Integer mailId);
 }
