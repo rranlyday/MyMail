@@ -26,4 +26,11 @@ public class MailPushUserServiceImpl implements MailPushUserService {
     public List<MailPushUser> selectNotArriveMailPushUserByUserId(int userId) {
         return mailPushUserMapper.selectNotArriveMailPushUserByUserId(userId);
     }
+
+    public int readMailPushMessage(Integer mailPushUserId) {
+        MailPushUser mailPushUser = new MailPushUser();
+        mailPushUser.setArrive(1);
+        mailPushUser.setId(mailPushUserId);
+        return mailPushUserMapper.updateByPrimaryKeySelective(mailPushUser);
+    }
 }

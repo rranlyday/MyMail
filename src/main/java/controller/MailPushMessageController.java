@@ -50,12 +50,35 @@ public class MailPushMessageController {
                 MailPushMessageDTO mailPushMessageDTO = new MailPushMessageDTO();
                 mailPushMessageDTO.setMailPush(mailPush);
                 mailPushMessageDTO.setMailPushUser(mailPushUser);
-
                 mailPushMessageDTOList.add(mailPushMessageDTO);
             }
             map.put("result", Boolean.TRUE);
             map.put("message", "推送成功！");
             map.put("mailPushMessageDTOList",mailPushMessageDTOList);
+        } catch (Exception e) {
+            map.put("result", Boolean.FALSE);
+            map.put("message", "执行出现出错！");
+            e.printStackTrace();
+        } finally {
+            view.setAttributesMap(map);
+            mav.setView(view);
+            return mav;
+        }
+    }
+
+
+    //标记推送消息为已读
+    @RequestMapping(value="/readMailPushMessage",method = RequestMethod.POST)
+    public ModelAndView readMailPushMessage(Integer mailPushUserId,HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        Map map = new HashMap();
+        try {
+            if (mailPushUserService.readMailPushMessage(mailPushUserId)>0){
+                map.put("result", Boolean.TRUE);
+            }else{
+                map.put("result", Boolean.FALSE);
+            }
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
             map.put("message", "执行出现出错！");

@@ -23,7 +23,6 @@ public class OrderReciveController {
     @Autowired
     OrderReciveService orderReciveService;
 
-
     //·¢ËÍÏûÏ¢
     @RequestMapping(value="/recive",method = RequestMethod.POST)
     public ModelAndView recive(Integer mailId,HttpServletRequest request) {
