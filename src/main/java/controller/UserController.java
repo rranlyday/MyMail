@@ -64,7 +64,7 @@ public class UserController {
         MappingJacksonJsonView view = new MappingJacksonJsonView();
         Map map = new HashMap();
 
-        System.out.println(" I am coming!!!");
+        System.out.println(" I am coming!!!register");
         try {
            int rs  = userService.register(cellPhone, password, idcard,fullName);
             if (rs > 0){

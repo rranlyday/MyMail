@@ -37,12 +37,12 @@ public class MailController {
         Map map = new HashMap();
 
         try {
+            System.out.println("hello world!");
             User user =  (User)request.getSession().getAttribute("user");
             int userId = user.getId();
            int mailId =  mailService.publishMail(userId,aimLinkman,aimPhone,aimAddress,
                    goodsTypeId,goodsSize,goodsWeight,goodsNum,aimTime,pickUpTime,
                    pickUpLinkman,pickUpPhone);
-
             if (mailId > 0 ){
                 map.put("result", Boolean.TRUE);
                 map.put("message", "发布邮单成功！");
@@ -219,5 +219,4 @@ public class MailController {
             return mav;
         }
     }
-
 }
