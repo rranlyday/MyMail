@@ -29,4 +29,9 @@ public interface OrderReciveMapper {
     int updateByPrimaryKey(OrderRecive record);
 
     OrderRecive getOrderReciveByMailmanIdAndMailId(@Param("mailId")Integer mailId,@Param("mailmanId") Integer mailmanId);
+
+    List<OrderRecive> getOrderReciveByMailmanId(@Param("mailmanId")Integer mailmanId, @Param("beginPos")int beginPos,
+                                                @Param("pageSize")int pageSize);
+
+    int getOrderReciveByMailmanIdPageNum(Integer mailmanId);
 }

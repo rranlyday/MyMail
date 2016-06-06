@@ -24,6 +24,12 @@ public class TimeUtil {
         return  date;
     }
 
+    public static String dateToStr(Date date){
+        if (date==null)
+            return  null;
+        SimpleDateFormat time=new SimpleDateFormat("dd");
+        return  time.format(date);
+    }
     public static void  main(String[] args){
         System.out.println(TimeUtil.getNowSysTime());
     }

@@ -1,11 +1,9 @@
 package service.impl;
 
-import com.alibaba.druid.sql.PagerUtils;
+
 import dao.MailMapper;
 import job.MailPushJob;
-import job.MailPushTask;
 import model.Mail;
-import model.MailPush;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.MailPushService;
@@ -13,7 +11,6 @@ import service.MailService;
 import util.MathUtil;
 import util.TimeUtil;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -60,12 +57,12 @@ public class MailServiceImpl implements MailService{
         int row =  mailMapper.insertSelective(mail);
         int mailId = mail.getId();
 
-        if (mailId > 0 ){  //Éú³ÉÓÊµ¥³É¹¦,Éú³ÉÍÆÏûÏ¢
+        if (mailId > 0 ){  //ç”Ÿæˆé‚®å•æˆåŠŸ
 
            int mailPushId =  mailPushService.buildMailPush(mailId,bulidMailPushMessage(mail));
 
-            if (mailPushId > 0){  //ÍÆËÍÏûÏ¢½¨Á¢³É¹¦
-                mailPushJob.addTask(mailPushId);  //¼ÓÈëÓÊµ¥ÍÆËÍjob
+            if (mailPushId > 0){  //ç”Ÿæˆæ¨é€æ¶ˆæ¯æˆåŠŸ
+                mailPushJob.addTask(mailPushId);  //åŠ å…¥æ¨é€job
             }
         }
         return  mailId;
@@ -87,7 +84,8 @@ public class MailServiceImpl implements MailService{
     }
 
     private  String bulidMailPushMessage(Mail  mail){
-        return "ÄãÓĞĞÂµÄÓÊµ¥£¬Çë×¢Òâ²éÊÕÅ¶£¡";
+        String  date = TimeUtil.dateToStr(mail.getAimTime());
+        return mail.getReward()+"å…ƒé‚®å•!" +"äº"+date+"æ—¥"+"é€è¾¾"+ mail.getAimAddress();
     }
 
     public List<Mail> searchMyPushMailNotPickUpByUserId(int userId,int curPage,int pageSize) {

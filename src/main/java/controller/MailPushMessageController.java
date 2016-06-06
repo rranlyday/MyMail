@@ -32,7 +32,7 @@ public class MailPushMessageController {
     @Autowired
     MailPushService mailPushService;
 
-    //ÓÊµ¥ÍÆËÍ
+    //æ¨é€é‚®å•æ¶ˆæ¯
     @RequestMapping(value="/mailPushMessage",method = RequestMethod.POST)
     public ModelAndView mailPushMessage(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
@@ -40,24 +40,27 @@ public class MailPushMessageController {
         Map map = new HashMap();
         try {
             User user = (User)request.getSession().getAttribute("user");
-            Integer userId = user.getId();
-            List<MailPushUser> mailPushUserList = mailPushUserService.selectNotArriveMailPushUserByUserId(userId);
-            List<MailPushMessageDTO> mailPushMessageDTOList = new ArrayList<MailPushMessageDTO>();
-            for (MailPushUser mailPushUser:mailPushUserList){
-
-                MailPush mailPush = mailPushService.selectMailPushById(mailPushUser.getMailPushId());
-
-                MailPushMessageDTO mailPushMessageDTO = new MailPushMessageDTO();
-                mailPushMessageDTO.setMailPush(mailPush);
-                mailPushMessageDTO.setMailPushUser(mailPushUser);
-                mailPushMessageDTOList.add(mailPushMessageDTO);
+            if (user != null){
+                Integer userId = user.getId();
+                List<MailPushUser> mailPushUserList = mailPushUserService.selectNotArriveMailPushUserByUserId(userId);
+                List<MailPush> mailPushList = new ArrayList<MailPush>();
+                for (MailPushUser mailPushUser:mailPushUserList){
+                    MailPush mailPush = mailPushService.selectMailPushById(mailPushUser.getMailPushId());
+                    mailPushList.add(mailPush);
+                    mailPushUserService.readMailPushMessage(mailPushUser.getId());
+                }
+                if (!mailPushList.isEmpty()){
+                    map.put("result", Boolean.TRUE);
+                    map.put("mailPushList", mailPushList);
+                }else{
+                    map.put("result", Boolean.FALSE);
+                }
+            }else{
+                map.put("result", Boolean.FALSE);
             }
-            map.put("result", Boolean.TRUE);
-            map.put("message", "ÍÆËÍ³É¹¦£¡");
-            map.put("mailPushMessageDTOList",mailPushMessageDTOList);
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
+            map.put("message", "æ‰§è¡Œå¼‚å¸¸ï¼");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -67,7 +70,7 @@ public class MailPushMessageController {
     }
 
 
-    //±ê¼ÇÍÆËÍÏûÏ¢ÎªÒÑ¶Á
+    //é˜…è¯»é‚®å•æ¶ˆæ¯
     @RequestMapping(value="/readMailPushMessage",method = RequestMethod.POST)
     public ModelAndView readMailPushMessage(Integer mailPushUserId,HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
@@ -81,7 +84,7 @@ public class MailPushMessageController {
             }
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
+            map.put("message", "æ‰§è¡Œå¼‚å¸¸ï¼");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);

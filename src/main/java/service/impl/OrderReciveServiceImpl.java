@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import service.MailService;
 import service.OrderReciveService;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/6/3 0003.
  */
@@ -31,5 +33,14 @@ public class OrderReciveServiceImpl implements OrderReciveService{
 
     public OrderRecive getOrderReciveByMailmanIdAndMailId(Integer mailId, Integer mailmanId) {
         return orderReciveMapper.getOrderReciveByMailmanIdAndMailId(mailId,mailmanId);
+    }
+
+    public List<OrderRecive> getOrderReciveByMailmanId(Integer mailmanId, int curPage, int pageSize) {
+        int beginPos = curPage * pageSize;
+        return orderReciveMapper.getOrderReciveByMailmanId(mailmanId,beginPos,pageSize);
+    }
+
+    public int getOrderReciveByMailmanIdPageNum(Integer mailmanId) {
+        return orderReciveMapper.getOrderReciveByMailmanIdPageNum(mailmanId);
     }
 }

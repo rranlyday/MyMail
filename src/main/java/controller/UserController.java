@@ -31,7 +31,6 @@ public class UserController {
         ModelAndView mav = new ModelAndView();
         MappingJacksonJsonView view = new MappingJacksonJsonView();
         Map map = new HashMap();
-        System.out.println(" I am coming!!!");
         try {
             User user = userService.login(loginName, password);
             if (user != null && user.getId() != null) {
@@ -40,15 +39,14 @@ public class UserController {
                 map.put("result", Boolean.TRUE);
                 map.put("message", "success");
                 map.put("user",user);
-                System.out.println("sucess！！");
+                System.out.println("鐧诲綍鎴愬姛");
             } else {
                 map.put("result", Boolean.FALSE);
-                map.put("message", "用户名或密码填写错误！");
-                System.out.println("fail！！");
+                System.out.println("鐧诲綍澶辫触");
             }
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "执行出现出错！");
+            map.put("message", "鎵ц寮傚父!");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -70,15 +68,12 @@ public class UserController {
            int rs  = userService.register(cellPhone, password, idcard,fullName);
             if (rs > 0){
                 map.put("result", Boolean.TRUE);
-                map.put("message", "注册成功！");
             }
             else {
                 map.put("result", Boolean.FALSE);
-                map.put("message", "注册失败！");
             }
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "执行出现出错！");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -98,7 +93,6 @@ public class UserController {
             map.put("result", Boolean.TRUE);
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "执行出现出错！");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);

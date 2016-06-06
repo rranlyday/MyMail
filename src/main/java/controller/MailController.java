@@ -1,6 +1,7 @@
 package controller;
 
 import model.Mail;
+import model.OrderRecive;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,7 @@ public class MailController {
     @Autowired
     ReceiverRemarkService receiverRemarkService;
 
-    //·¢²¼ÓÊµ¥
+    //ç”Ÿæˆé‚®å•
     @RequestMapping(value="/publishMail",method = RequestMethod.POST)
     public ModelAndView publishMail(String aimLinkman, String aimPhone, String aimAddress,Integer goodsTypeId,
                                     String goodsSize, String goodsWeight, Integer goodsNum,String aimTime, String pickUpTime,
@@ -65,14 +66,14 @@ public class MailController {
             if (mailId > 0 ){
                 map.put("result", Boolean.TRUE);
                 map.put("mailId",mailId);
-                map.put("message", "·¢²¼ÓÊ;µ¥³É¹¦£¡");
+                map.put("message", "ç”Ÿæˆé‚®å•æˆåŠŸ");
             }else{
                 map.put("result", Boolean.FALSE);
-                map.put("message", "·¢²¼ÓÊµ¥Ê§°Ü£¡");
+                map.put("message", "ç”Ÿæˆé‚®å•å¤±è´¥");
             }
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
+            map.put("message", "æ‰§è¡Œå¼‚å¸¸ï¼");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -127,7 +128,7 @@ public class MailController {
         }
     }
 
-    //Î´½ÓÓÊµ¥
+    //æŸ¥è¯¢æœªæ¥é‚®å•
     @RequestMapping(value="/searchNotTakedMail",method = RequestMethod.POST)
     public ModelAndView searchNotTakedMail(int curPage,int pageSize) {
         ModelAndView mav = new ModelAndView();
@@ -139,10 +140,10 @@ public class MailController {
 
             map.put("mailList",mailList);
             map.put("result", Boolean.TRUE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
+            map.put("message", "æŸ¥è¯¢æˆåŠŸï¼");
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
+            map.put("message", "æ‰§è¡Œå¼‚å¸¸ï¼");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -151,7 +152,7 @@ public class MailController {
         }
     }
 
-    //ËÑË÷ÓÊµ¥
+    //é€šè¿‡æ¡ä»¶æŸ¥è¯¢é‚®å•
     @RequestMapping(value="/searchMail",method = RequestMethod.POST)
     public ModelAndView searchMail(int curPage,int pageSize,String searchCondition) {
         ModelAndView mav = new ModelAndView();
@@ -163,10 +164,9 @@ public class MailController {
 
             map.put("mailList",mailList);
             map.put("result", Boolean.TRUE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
+            map.put("message", "æ‰§è¡Œå¼‚å¸¸ï¼");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -175,7 +175,7 @@ public class MailController {
         }
     }
 
-    //ÎÒ·¢²¼Î´½ÓÓÊµ¥
+    //æŸ¥è¯¢æœªæ¥é‚®å•
     @RequestMapping(value="/searchMyPushNotPickUpMail",method = RequestMethod.POST)
     public ModelAndView searchMyPushNotPickUpMail(int curPage,int pageSize,HttpServletRequest request){
         ModelAndView mav = new ModelAndView();
@@ -189,7 +189,7 @@ public class MailController {
             map.put("result", Boolean.TRUE);
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
+            map.put("message", "æ‰§è¡Œå¼‚å¸¸ï¼");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -198,7 +198,8 @@ public class MailController {
         }
     }
 
-    //ÎÒ·¢µÄÒÑ½ÓÓÊµ¥
+
+    //æŸ¥è¯¢æˆ‘çš„å·²æ¥é‚®å•
     @RequestMapping(value="/searchMyPushPickedMail",method = RequestMethod.POST)
     public ModelAndView searchMyPushPickedMail(int curPage,int pageSize,HttpServletRequest request){
         ModelAndView mav = new ModelAndView();
@@ -212,7 +213,7 @@ public class MailController {
             map.put("result", Boolean.TRUE);
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
+            map.put("message", "æ‰§è¡Œå¼‚å¸¸ï¼");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -221,7 +222,7 @@ public class MailController {
         }
     }
 
-    //ÎÒ·¢ÒÑ½ÓÓÊµ¥
+    //æŸ¥è¯¢æ‰€æœ‰é‚®å•
     @RequestMapping(value="/searchAllMyPushMail",method = RequestMethod.POST)
     public ModelAndView searchAllMyPushMail(int curPage,int pageSize,HttpServletRequest request){
         ModelAndView mav = new ModelAndView();
@@ -235,7 +236,7 @@ public class MailController {
             map.put("result", Boolean.TRUE);
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
+            map.put("message", "æ‰§è¡Œå¼‚å¸¸ï¼");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -245,7 +246,7 @@ public class MailController {
     }
 
 
-    //ÎÒ·¢Î´½ÓÓÊµ¥×ÜÒ³Êı
+    //æŸ¥è¯¢æˆ‘å‘çš„æœªæ¥é‚®å•
     @RequestMapping(value="/searchNotPickUpdeMailPageNumByUserId",method = RequestMethod.POST)
     public ModelAndView searchNotPickUpdeMailPageNumByUserId(int pageSize,HttpServletRequest request){
         ModelAndView mav = new ModelAndView();
@@ -258,7 +259,7 @@ public class MailController {
             map.put("pageNum",pageNum);
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
+            map.put("message", "æ‰§è¡Œå¼‚å¸¸ï¼");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -267,7 +268,7 @@ public class MailController {
         }
     }
 
-    //Î´½ÓÓÊµ¥×ÜÒ³Êı
+    //æŸ¥è¯¢æœªæ¥é‚®å•é¡µæ•°
     @RequestMapping(value="/searchNotPickUpdeMailPageNum",method = RequestMethod.POST)
     public ModelAndView searchNotPickUpdeMailPageNum(int pageSize){
         ModelAndView mav = new ModelAndView();
@@ -278,7 +279,7 @@ public class MailController {
             map.put("pageNum",pageNum);
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
+            map.put("message", "æ‰§è¡Œå¼‚å¸¸ï¼");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -286,7 +287,7 @@ public class MailController {
             return mav;
         }
     }
-    //»ñÈ¡ÓÊµ¥ById
+    //æŸ¥è¯¢é‚®å•byId
     @RequestMapping(value="/searchMailById",method = RequestMethod.POST)
     public ModelAndView searchMailById(Integer mailId){
         ModelAndView mav = new ModelAndView();
@@ -298,7 +299,7 @@ public class MailController {
             map.put("mail", mail);
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
+            map.put("message", "æ‰§è¡Œå¼‚å¸¸ï¼");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -307,7 +308,7 @@ public class MailController {
         }
     }
 
-    //Íê³ÉÓÊµ¥
+    //å®Œæˆé‚®å•
     @RequestMapping(value="/completeMailById",method = RequestMethod.POST)
     public ModelAndView completeMailById(Integer mailId){
         ModelAndView mav = new ModelAndView();
@@ -321,7 +322,7 @@ public class MailController {
            }
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
+            map.put("message", "æ‰§è¡Œå¼‚å¸¸ï¼");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -330,7 +331,7 @@ public class MailController {
         }
     }
 
-    //Íê³ÉÓÊµ¥
+    //æŸ¥è¯¢ç”¨æˆ·ä¸é‚®å•å…³ç³»
     @RequestMapping(value="/userMailType",method = RequestMethod.POST)
     public ModelAndView userMailType(Integer mailId,HttpServletRequest request){
         ModelAndView mav = new ModelAndView();
@@ -344,15 +345,15 @@ public class MailController {
             if (mail != null){
                 if (mail.getUserId()==userId){
                     if (orderReciveService.getOrderReciveByMailmanIdAndMailId(mailId,userId) != null){
-                        userType = 3;      //¼´Ê¹·¢µ¥ÈËÒ²ÊÇ½Óµ¥ÈË
+                        userType = 3;      //å³æ˜¯å‘å‘å•äººä¹Ÿæ˜¯æ¥å•äºº
                     }else {
-                        userType = 1;     //·¢µ¥ÈË
+                        userType = 1;     //å‘å•äºº
                     }
                 }else {
                     if(orderReciveService.getOrderReciveByMailmanIdAndMailId(mailId,userId) != null){
-                        userType = 2;    //½Óµ¥ÈË
+                        userType = 2;    //æ¥å•äºº
                     }else {
-                        userType = 0 ;  //¼È²»ÊÇ·¢µ¥ÈËÒ²²»ÊÇ½Óµ¥ÈË
+                        userType = 0 ;  //æ—¢ä¸æ˜¯å‘å•äººä¹Ÿä¸æ˜¯æ¥å•äºº
                     }
                 }
             }
@@ -371,7 +372,7 @@ public class MailController {
             map.put("remarked", remarked);
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
+            map.put("message", "æ‰§è¡Œå¼‚å¸¸ï¼");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -379,4 +380,34 @@ public class MailController {
             return mav;
         }
     }
+
+    @RequestMapping(value="/getOrderReciveByMailmanIdPageNum",method = RequestMethod.POST)
+    public ModelAndView getOrderReciveByMailmanIdPageNum(Integer curPage,Integer pageSize,HttpServletRequest request){
+        ModelAndView mav = new ModelAndView();
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        Map map = new HashMap();
+        try {
+            User user = (User)request.getSession().getAttribute("user");
+            int userId = user.getId();
+            int num = orderReciveService.getOrderReciveByMailmanIdPageNum(userId);
+            List<OrderRecive> orderReciveList = orderReciveService.getOrderReciveByMailmanId(userId,curPage,pageSize);
+            List<Mail> mailList = new ArrayList<Mail>();
+            for (OrderRecive orderRecive:orderReciveList){
+                Mail mail = mailService.searchMailById(orderRecive.getMailId());
+                mailList.add(mail);
+            }
+            map.put("result", Boolean.TRUE);
+            map.put("num",num);
+            map.put("mailList",mailList);
+        } catch (Exception e) {
+            map.put("result", Boolean.FALSE);
+            map.put("message", "æ‰§è¡Œå¼‚å¸¸ï¼");
+            e.printStackTrace();
+        } finally {
+            view.setAttributesMap(map);
+            mav.setView(view);
+            return mav;
+        }
+    }
+
 }

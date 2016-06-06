@@ -26,7 +26,7 @@ public class ReceiverRemarkController {
     @Autowired
     ReceiverRemarkService receiverRemarkService;
 
-    //·¢µ¥Ô±ÆÀÂÛ
+    //æ¥å•äººè¯„è®º æœ‰å›¾ç‰ˆ
     @RequestMapping(value="/receiverRemark",method = RequestMethod.POST)
     public ModelAndView receiverRemark(Integer mailId,Integer grade,String remark,
                                      @RequestParam("file") CommonsMultipartFile[] files) {
@@ -64,7 +64,7 @@ public class ReceiverRemarkController {
                         break;
                     } catch (Exception e) {
                         e.printStackTrace();
-                        System.out.println("ÉÏ´«³ö´í");
+                        System.out.println("ï¿½Ï´ï¿½ï¿½ï¿½ï¿½ï¿½");
                     }
                 }
             }
@@ -75,7 +75,7 @@ public class ReceiverRemarkController {
         }
     }
 
-    //·¢µ¥Ô±ÆÀÂÛ
+    //æ¥å•äººè¯„è®º æ— å›¾ç‰ˆ
     @RequestMapping(value="/receiverRemarkNoPic",method = RequestMethod.POST)
     public ModelAndView receiverRemarkNoPic(Integer mailId,Integer grade,String remark) {
         ModelAndView mav = new ModelAndView();

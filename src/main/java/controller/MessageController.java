@@ -25,7 +25,7 @@ public class MessageController {
     @Autowired
     MessageService messageService;
 
-    //·¢ËÍÏûÏ¢
+    //å‘é€æ¶ˆæ¯
     @RequestMapping(value="/sendMessage",method = RequestMethod.POST)
     public ModelAndView sendMessage(int receiverId, String content,HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
@@ -37,15 +37,12 @@ public class MessageController {
             int messageId = messageService.buildMessage(senderId,receiverId,content);
             if (messageId > 0){
                 map.put("result", Boolean.TRUE);
-                map.put("message", "·¢ËÍ³É¹¦£¡");
             }
             else{
                 map.put("result", Boolean.FALSE);
-                map.put("message", "·¢ËÍÊ§°Ü£¡");
             }
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ÐÐ³öÏÖ³ö´í£¡");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -55,7 +52,7 @@ public class MessageController {
     }
 
 
-    //½ÓÊÕÎ´¶ÁÏûÏ¢
+    //æŽ¥æ”¶æ¶ˆæ¯
     @RequestMapping(value="/receiveMessage",method = RequestMethod.POST)
     public ModelAndView receiveMessage(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
@@ -68,10 +65,8 @@ public class MessageController {
 
             map.put("messageList",messageList);
             map.put("result", Boolean.TRUE);
-            map.put("message", "²éÑ¯ÏûÏ¢³É¹¦£¡");
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ÐÐ³öÏÖ³ö´í£¡");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);
@@ -80,7 +75,7 @@ public class MessageController {
         }
     }
 
-    //±ê¼ÇÏûÏ¢ÎªÒÔ¶Á×´Ì¬
+    //é˜…è¯»æ¶ˆæ¯
     @RequestMapping(value="/readMessage",method = RequestMethod.POST)
     public ModelAndView readMessage(int messageId) {
         ModelAndView mav = new ModelAndView();
@@ -90,15 +85,12 @@ public class MessageController {
             int rs = messageService.updateMessageToReadById(messageId);
             if (rs > 0){
                 map.put("result", Boolean.TRUE);
-                map.put("message", "±ê¼Ç³É¹¦£¡");
             }
             else{
                 map.put("result", Boolean.FALSE);
-                map.put("message", "±ê¼ÇÊ§°Ü£¡");
             }
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ÐÐ³öÏÖ³ö´í£¡");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);

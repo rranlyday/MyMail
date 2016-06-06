@@ -7,6 +7,7 @@
     <input type="text" name="loginName" /><br>
     <input type="text" name="password" /><br>
     <input type="submit" value="submit">
+    getOrderReciveByMailmanIdPageNum
 </form>
 
 </body>

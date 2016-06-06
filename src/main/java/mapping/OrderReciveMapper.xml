@@ -183,8 +183,22 @@
   <select id="getOrderReciveByMailmanIdAndMailId" resultMap="BaseResultMap" parameterType="map" >
     select
     <include refid="Base_Column_List" />
-    from receiver_remark
+    from order_recive
     where mail_id = #{mailId,jdbcType=INTEGER}
     AND  mailman_id = #{mailmanId,jdbcType=INTEGER}
   </select>
+
+  <select id="getOrderReciveByMailmanId" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from order_recive
+    where  mailman_id = #{mailmanId,jdbcType=INTEGER}
+    limit #{beginPos,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="getOrderReciveByMailmanIdPageNum" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
+    select count(*) from order_recive
+    WHERE mailman_id = #{mailmanId,jdbcType=INTEGER}
+  </select>
+
 </mapper>

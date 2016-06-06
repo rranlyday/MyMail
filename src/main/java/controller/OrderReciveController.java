@@ -23,7 +23,7 @@ public class OrderReciveController {
     @Autowired
     OrderReciveService orderReciveService;
 
-    //½Óµ¥
+    //æ¥å•
     @RequestMapping(value="/recive",method = RequestMethod.POST)
     public ModelAndView recive(Integer mailId,HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
@@ -39,7 +39,7 @@ public class OrderReciveController {
             }
         } catch (Exception e) {
             map.put("result", Boolean.FALSE);
-            map.put("message", "Ö´ĞĞ³öÏÖ³ö´í£¡");
+            map.put("message", "æ‰§è¡Œå‡ºç°å‡ºé”™ï¼");
             e.printStackTrace();
         } finally {
             view.setAttributesMap(map);

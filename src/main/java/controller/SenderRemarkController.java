@@ -29,7 +29,7 @@ public class SenderRemarkController {
     @Autowired
     SenderRemarkService senderRemarkService;
 
-    //ÓÊµİÈË¼şÈËÆÀÂÛ
+    //å‘å•äººè¯„è®º æœ‰å›¾ç‰ˆ
     @RequestMapping(value="/senderRemark",method = RequestMethod.POST)
     public ModelAndView senderRemark(Integer mailId,Integer grade,String remark,
                                      @RequestParam("file") CommonsMultipartFile[] files) {
@@ -60,16 +60,16 @@ public class SenderRemarkController {
                         int rs = senderRemarkService.buildSenderRemark(mailId,grade,remark,photoPath);
                         if (rs > 0){
                             map.put("result", Boolean.TRUE);
-                            map.put("message", "×¢²á³É¹¦£¡");
+                            map.put("message", "???????");
                         }
                         else {
                             map.put("result", Boolean.FALSE);
-                            map.put("message", "×¢²áÊ§°Ü£¡");
+                            map.put("message", "???????");
                         }
                         break;
                     } catch (Exception e) {
                         e.printStackTrace();
-                        System.out.println("ÉÏ´«³ö´í");
+                        System.out.println("???????");
                     }
                 }
             }
@@ -80,7 +80,7 @@ public class SenderRemarkController {
         }
     }
 
-    //ÓÊµİÈË¼şÈËÆÀÂÛ
+    //å‘å•äººè¯„è®ºæ— å›¾ç‰ˆ
     @RequestMapping(value="/senderRemarkNoPic",method = RequestMethod.POST)
     public ModelAndView senderRemarkNoPic(Integer mailId,Integer grade,String remark) {
         ModelAndView mav = new ModelAndView();
@@ -90,11 +90,9 @@ public class SenderRemarkController {
             int rs = senderRemarkService.buildSenderRemark(mailId,grade,remark,null);
             if (rs > 0){
                 map.put("result", Boolean.TRUE);
-                map.put("message", "×¢²á³É¹¦£¡");
             }
             else {
                 map.put("result", Boolean.FALSE);
-                map.put("message", "×¢²áÊ§°Ü£¡");
             }
         } finally {
             view.setAttributesMap(map);
@@ -103,7 +101,7 @@ public class SenderRemarkController {
         }
     }
 
-    //»ñÈ¡ÆÀÂÛ
+    //é€šè¿‡é‚®å•Idè·å–è¯„è®º
     @RequestMapping(value="/getSenderRemark",method = RequestMethod.POST)
     public ModelAndView getSenderRemarkByMailId(Integer mailId){
         ModelAndView mav = new ModelAndView();
